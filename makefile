@@ -15,3 +15,9 @@ export BIN = $(ROOT)/bin
 
 all:
 	$(MAKE) -C $(ASSEMBLY)
+
+run:
+	qemu-system-i386 bin/boot_kernel.bin
+
+clean:
+	rm bin/*
