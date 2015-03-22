@@ -14,6 +14,7 @@ export BIN = $(ROOT)/bin
 # ----- Make Code ----- #
 
 all:
+	mkdir -p bin
 	$(MAKE) -C $(ASSEMBLY)
 
 run:
