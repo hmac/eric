@@ -1,6 +1,6 @@
 ; Procedure for printing a string to screen, expects first char address in bx.
 ; Real mode only
-print_screen:
+print_string:
 	pusha ; Saves current register state to stack.
 	mov ah, 0x0e ; Sets scrolling teletext BIOS routine.
 

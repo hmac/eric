@@ -7,6 +7,7 @@ export CC = gcc
 ROOT = $(CURDIR)
 # Source code location.
 ASSEMBLY = $(ROOT)/assembly
+C = $(ROOT)/c
 # Executable location.
 export BIN = $(ROOT)/bin
 
@@ -15,9 +16,12 @@ export BIN = $(ROOT)/bin
 
 all:
 	$(MAKE) -C $(ASSEMBLY)
+	$(MAKE) -C $(C)
+	cat $(BIN)/boot_kernel.bin $(BIN)/kernel.bin > $(BIN)/os-image
 
 run:
-	qemu-system-i386 bin/boot_kernel.bin
+	qemu-system-i386 $(BIN)/os-image
 
 clean:
-	rm bin/*
+	rm $(BIN)/*
+	rm $(C)/*.o
