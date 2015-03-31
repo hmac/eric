@@ -14,14 +14,16 @@ export BIN = $(ROOT)/bin
 
 # ----- Make Code ----- #
 
-all:
+all: clean
 	$(MAKE) -C $(ASSEMBLY)
 	$(MAKE) -C $(C)
 	cat $(BIN)/boot_kernel.bin $(BIN)/kernel.bin > $(BIN)/os-image
 
-run:
+.PHONY: run
+run: all
 	qemu-system-i386 $(BIN)/os-image
 
+.PHONY: clean
 clean:
-	rm $(BIN)/*
-	rm $(C)/*.o
+	-rm $(BIN)/*
+	-rm $(C)/*.o

@@ -1,7 +1,7 @@
 # ----- Variables ----- #
 
 # Sources.
-SOURCES = kernel.c
+SOURCES = kernel_entry.asm kernel.c
 
 # Target executable.
 NAME = kernel
@@ -14,5 +14,6 @@ BIN = ../bin
 all: $(NAME)
 
 $(NAME): $(SOURCES)
-	../xc/bin/i386-elf-gcc -ffreestanding -c kernel.c -o $(NAME).o
-	../xc/bin/i386-elf-ld -o $(BIN)/kernel.bin -Ttext 0x1000 $(NAME).o --oformat binary
+	nasm kernel_entry.asm -f elf -o kernel_entry.o
+	../xc/bin/i386-elf-gcc -Wall -Wextra -std=c11 -g -ffreestanding -c kernel.c -o $(NAME).o
+	../xc/bin/i386-elf-ld --discard-none -o $(BIN)/kernel.bin -Ttext 0x1000 kernel_entry.o $(NAME).o --oformat binary

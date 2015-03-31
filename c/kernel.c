@@ -1,35 +1,59 @@
+#include <stdint.h>
+#include <stdbool.h>
+
 void clear_screen();
+void* malloc(unsigned long size);
+void printchar(char c);
 
-void main() {
-  clear_screen();
+#define VGA_START 0xb8000
+#define TERM_WIDTH 80
+#define HEAP_START 0x100000
+int term_column = 0;
+int term_row = 0;
+char term_colour;
 
-  char* video_memory = (char*) 0xb8000;
-  *video_memory = 'E';
-  video_memory = video_memory + 2;
-  *video_memory = 'R';
-  video_memory = video_memory + 2;
-  *video_memory = 'I';
-  video_memory = video_memory + 2;
-  *video_memory = 'C';
-  video_memory = video_memory + 2;
-  *video_memory = ' ';
-  video_memory = video_memory + 2;
-  *video_memory = ' ';
-  
-  // Another way of doing this
-  char str[2] = "OS";
-  *video_memory = str[0];
-  video_memory = video_memory + 2;
-  *video_memory = str[1];
+int main() {
+  term_colour = *((char*) VGA_START+1);
+  term_row = 10;
+
+  printchar('e');
+  printchar('r');
+  printchar('i');
+  printchar('c');
+  printchar('.');
+
+  return 0;
+}
+
+void printchar(char c) {
+  uint16_t  entry = c | term_colour << 8;
+  uint16_t* vga = (uint16_t*) VGA_START;
+  uint16_t index = (TERM_WIDTH*term_row) + term_column;
+  vga[index] = entry;
+  if (term_column == TERM_WIDTH) {
+    term_column = 0;
+    term_row++;
+  }
+  else {
+    term_column++;
+  }
 }
 
 
 void clear_screen() {
-  char* start = (char*) 0xb8000;
-  char* end = (char*) 0xb8000+0xfa0;
+  char* start = (char*) VGA_START;
+  char* end = (char*) start+0xfa0;
   while (start <= end) {
     *start = 0;
+    *(start+1) = term_colour;
     start = start + 2;
   }
+}
+
+// A very, very simple memory manager
+void* malloc(unsigned long size) {
+  static void* mem = (void*) HEAP_START;
+  mem = mem + size;
+  return mem - size;
 }
 
