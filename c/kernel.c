@@ -4,6 +4,7 @@
 void clear_screen();
 void* malloc(unsigned long size);
 void printchar(char c);
+void print(char str[]);
 
 #define VGA_START 0xb8000
 #define TERM_WIDTH 80
@@ -16,14 +17,19 @@ int main() {
   term_colour = *((char*) VGA_START+1);
   term_row = 10;
 
-  printchar('e');
-  printchar('r');
-  printchar('i');
-  printchar('c');
-  printchar('.');
+  char eric[]= "eric.";
+  print(eric);
+
 
   return 0;
 }
+
+void print(char str[]) {
+  for (int i = 0; str[i] != '\0'; i++) {
+    printchar(str[i]);
+  }
+}
+
 
 void printchar(char c) {
   uint16_t  entry = c | term_colour << 8;

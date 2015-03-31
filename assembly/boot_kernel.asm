@@ -1,7 +1,7 @@
 ; Where to load the kernel to in memory.
 %define KERNEL_MEM_LOC 0x7e00
 ; Number of drive sectors the kernel takes up.
-%define KERNEL_SIZE 1
+%define KERNEL_SIZE 2
 ; Where to put the base of the stack in memory.
 %define STACK_BASE 0x8b00
 
