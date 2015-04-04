@@ -17,14 +17,15 @@ int main() {
   term_colour = *((char*) VGA_START+1);
   term_row = 10;
 
-  char eric[]= "eric.";
-  print(eric);
-
+  print("Welcome to eric.");
+  term_row++;
+  term_column = 0;
+  print("A tiny tiny kernel.");
 
   return 0;
 }
 
-void print(char str[]) {
+void print(char *str) {
   for (int i = 0; str[i] != '\0'; i++) {
     printchar(str[i]);
   }
