@@ -15,6 +15,7 @@ export BIN = $(ROOT)/bin
 # ----- Make Code ----- #
 
 all: clean
+	mkdir -p bin
 	$(MAKE) -C $(ASSEMBLY)
 	$(MAKE) -C $(C)
 	cat $(BIN)/boot_kernel.bin $(BIN)/kernel.bin > $(BIN)/os-image
