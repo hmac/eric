@@ -1,2 +1,5 @@
 bin/*
 *.pdf
+xc/*
+c/*.o
+*.DS_Store
