@@ -24,7 +24,7 @@ jmp $
 %include "load_from_disk.asm"
 %include "gdt.asm"
 
-LOADING_KERNEL_MESSAGE db "Loading kernel into memory.", 0
+LOADING_KERNEL_MESSAGE db "Loading kernel into memory...", 0
 
 load_kernel:
 	mov bx, LOADING_KERNEL_MESSAGE
