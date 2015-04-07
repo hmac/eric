@@ -6,8 +6,8 @@ export CC = gcc
 # Root dir.
 ROOT = $(CURDIR)
 # Source code location.
-ASSEMBLY = $(ROOT)/assembly
-C = $(ROOT)/c
+BOOT = $(ROOT)/boot
+KERNEL = $(ROOT)/kernel
 # Executable location.
 export BIN = $(ROOT)/bin
 
@@ -16,8 +16,8 @@ export BIN = $(ROOT)/bin
 
 all: clean
 	mkdir -p bin
-	$(MAKE) -C $(ASSEMBLY)
-	$(MAKE) -C $(C)
+	$(MAKE) -C $(BOOT)
+	$(MAKE) -C $(KERNEL)
 	cat $(BIN)/boot_kernel.bin $(BIN)/kernel.bin > $(BIN)/os-image
 
 .PHONY: run
@@ -27,4 +27,4 @@ run: all
 .PHONY: clean
 clean:
 	-rm $(BIN)/*
-	-rm $(C)/*.o
+	-rm $(KERNEL)/*.o

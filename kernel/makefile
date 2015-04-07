@@ -1,7 +1,7 @@
 # ----- Variables ----- #
 
 # Sources.
-SOURCES = kernel_entry.asm kernel.c
+SOURCES = kernel_entry.asm kernel.c gdt.c
 
 # Target executable.
 NAME = kernel

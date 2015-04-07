@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "gdt.c"
+
 void clear_screen();
 void* malloc(unsigned long size);
 void printchar(char c);
@@ -22,8 +24,13 @@ int main() {
   term_column = 0;
   print("A tiny tiny kernel.");
 
+  // Now we attempt to set up the GDT again.
+  GDTDescriptor* gdt = create_gdt();
+  load_gdt(gdt);
+
   return 0;
 }
+
 
 void print(char *str) {
   for (int i = 0; str[i] != '\0'; i++) {

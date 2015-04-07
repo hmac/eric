@@ -1,5 +1,5 @@
 bin/*
 *.pdf
 xc/*
-c/*.o
+kernel/*.o
 *.DS_Store
