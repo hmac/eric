@@ -23,3 +23,8 @@ struct IDTEntry keyboard_interrupt = {
 };
 
 IDTEntry* idt = (IDTEntry *) GDT_START+GDT_TOTAL_SIZE;
+
+// TODO: create full IDT table
+// TODO: remap PIC IRQs (http://wiki.osdev.org/PIC#Initialisation)
+// TODO: load new IDT table
+// TODO: test it out
