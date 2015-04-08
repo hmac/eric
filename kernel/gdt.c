@@ -1,7 +1,5 @@
 #include <stdint.h>
 
-#pragma pack(push)
-#pragma pack(1)
 typedef struct GDTEntry {
   uint16_t limit_1; // First part of the limit address
   uint16_t base_1;  // First part of the base address
@@ -9,12 +7,12 @@ typedef struct GDTEntry {
   uint8_t access;   // Access byte
   uint8_t limit_2;  // Second part of limit address, plus 4 bit flags
   uint16_t base_3;  // Third part of base address
-} GDTEntry;
+} __attribute__((packed)) GDTEntry;
+
 typedef struct GDTDescriptor {
   uint16_t size;
   uint32_t start;
-} GDTDescriptor;
-#pragma pack(pop)
+} __attribute__((packed)) GDTDescriptor;
 
 #define GDT_START 0xa510
 #define GDT_ENTRIES 3
