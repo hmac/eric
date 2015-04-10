@@ -1,3 +1,6 @@
+#ifndef _PRINT_C_
+#define _PRINT_C_
+
 #include <stdint.h>
 
 void printchar(char c);
@@ -30,3 +33,5 @@ void printchar(char c) {
     term_column++;
   }
 }
+
+#endif

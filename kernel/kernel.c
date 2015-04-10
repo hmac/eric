@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include "print.c"
 #include "gdt.c"
+#include "idt.c"
 
 void clear_screen();
 void* malloc(unsigned long size);
@@ -19,9 +20,17 @@ int main() {
   print("A tiny tiny kernel.");
 
   // Now we attempt to set up the GDT again.
-  GDTDescriptor* gdt = create_gdt();
-  load_gdt(gdt);
+  init_gdt();
 
+  // Now we attempt to set up the IDT
+  remap_pics();
+  init_idt();
+  
+  __asm__ ("int $0x4");
+  __asm__ ("sti");
+  /*__asm__ ("int $0x3");*/
+  /*__asm__ ("int $0x1e");*/
+  
   return 0;
 }
 
