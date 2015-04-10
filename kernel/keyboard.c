@@ -1,9 +1,9 @@
+#ifndef _KEYBOARD_C
+#define _KEYBOARD_C
+
 #include <stdint.h>
 #include "io.c"
 #include "print.c"
-
-#ifndef _KEYBOARD_C
-#define _KEYBOARD_C
 
 void keyboard_handler();
 

@@ -25,6 +25,7 @@ int main() {
   remap_pics();
   init_idt();
 
+  // Set up keyboard handler
   InterruptHandlers[1] = keyboard_handler;
   
   // Enable HW interrupts

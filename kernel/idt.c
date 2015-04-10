@@ -1,3 +1,6 @@
+#ifndef _IDT_C_
+#define _IDT_C_
+
 #include <stdint.h>
 #include "print.c"
 #include "io.c"
@@ -194,3 +197,5 @@ void sendEOI(uint8_t irq) {
   }
   outb(PIC1_CMD, PIC_EOI);
 }
+
+#endif
