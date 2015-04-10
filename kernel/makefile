@@ -1,7 +1,7 @@
 # ----- Variables ----- #
 
 # Sources.
-SOURCES = kernel_entry.asm kernel.c gdt.c load_gdt.asm idt.c isr.asm io.c print.c
+SOURCES = kernel_entry.asm kernel.c gdt.c load_gdt.asm idt.c isr.asm io.c print.c keyboard.c
 
 # Target executable.
 NAME = kernel

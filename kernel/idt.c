@@ -35,6 +35,7 @@ void init_idt() {
 
 IDTEntry idt[256];
 IDTDescriptor idt_desc;
+void (*InterruptHandlers[16])();
 void create_idt_table() {
     ADD_ENTRY(0);  // Unfortunately I don't think there's a more concise way of writing this.
     ADD_ENTRY(1);
@@ -109,18 +110,17 @@ typedef struct ISRRegisters {
 } ISRRegisters;
 
 void interrupt_handler(ISRRegisters regs){
-  // We will need to handle the interrupt here.
+  
   // Exceptions should probably print an error message to screen.
-  // Hardware interrupts will need to be handled individually.
-  // e.g. for the keyboard, we should read the data from the PIC
-  // and store it in a buffer perhaps.
-  if (regs.int_no < 10) {
-    printchar(regs.int_no+48);
+  // Int numbers < 32 are exceptions
+  // 32 is the timer
+  // 33 is the keyboard
+
+  // Check if there is a handler registered for this interrupt
+  void (*h)();
+  if ((h = InterruptHandlers[regs.int_no-32])) {
+    h();
   }
-  if (regs.int_no == 33) {
-    print("keyboard");
-  }
-  // TODO: Get IRQ from stack and send EOI
   sendEOI(regs.int_no);
 }
 

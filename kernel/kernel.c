@@ -3,6 +3,7 @@
 #include "print.c"
 #include "gdt.c"
 #include "idt.c"
+#include "keyboard.c"
 
 void clear_screen();
 void* malloc(unsigned long size);
@@ -19,17 +20,15 @@ int main() {
   term_column = 0;
   print("A tiny tiny kernel.");
 
-  // Now we attempt to set up the GDT again.
   init_gdt();
 
-  // Now we attempt to set up the IDT
   remap_pics();
   init_idt();
+
+  InterruptHandlers[1] = keyboard_handler;
   
-  __asm__ ("int $0x4");
+  // Enable HW interrupts
   __asm__ ("sti");
-  /*__asm__ ("int $0x3");*/
-  /*__asm__ ("int $0x1e");*/
   
   return 0;
 }
