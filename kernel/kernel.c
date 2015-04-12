@@ -4,6 +4,7 @@
 #include "gdt.c"
 #include "idt.c"
 #include "keyboard.c"
+#include "pit.c"
 
 void clear_screen();
 void* malloc(unsigned long size);
@@ -26,7 +27,11 @@ int main() {
   init_idt();
 
   // Set up keyboard handler
-  InterruptHandlers[1] = keyboard_handler;
+  install_interrupt_handler(1, keyboard_handler);
+  
+  // Set up PIT
+  set_timer_freq(100);
+  install_interrupt_handler(0, pit_handler);
   
   // Enable HW interrupts
   __asm__ ("sti");

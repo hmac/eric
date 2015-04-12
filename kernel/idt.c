@@ -13,6 +13,7 @@ void load_idt();
 void interrupt_handler();
 void remap_pics();
 void sendEOI(uint8_t irq);
+void install_interrupt_handler(int irq, void (*handler)());
 
 typedef struct IDTEntry {
   uint16_t offset_1; // Offset bits 0..15
@@ -125,6 +126,10 @@ void interrupt_handler(ISRRegisters regs){
     h();
   }
   sendEOI(regs.int_no);
+}
+
+void install_interrupt_handler(int irq, void (*handler)()) {
+  InterruptHandlers[irq] = handler;
 }
 
 /*
