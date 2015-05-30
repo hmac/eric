@@ -13,6 +13,7 @@ void keyboard_handler();
 #define ALT 0
 #define SPC 0
 #define CPSLK 0
+#define TAB 0
 #define F1 0
 #define F2 0
 #define F3 0
@@ -41,9 +42,10 @@ void keyboard_handler();
 
 void keyboard_handler() {
   // For some odd reason this array isn't initialised properly outside the function..
+  // This keyboard layout is probably specific to the Macbook Pro
   uint8_t keyboard_keymap[128] = {
-    0, 0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
-    'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
+    0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
+    TAB, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
     CTRL, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`',
     LSHIFT, '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', RSHIFT,
     '*', ALT, SPC, CPSLK, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
