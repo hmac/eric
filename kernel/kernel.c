@@ -1,17 +1,16 @@
 #include <stdint.h>
 #include <stdbool.h>
+#include "print.c"
+#include "gdt.c"
+#include "idt.c"
+#include "keyboard.c"
+#include "pit.c"
 
 void clear_screen();
 void* malloc(unsigned long size);
-void printchar(char c);
-void print(char str[]);
 
 #define VGA_START 0xb8000
-#define TERM_WIDTH 80
 #define HEAP_START 0x100000
-int term_column = 0;
-int term_row = 0;
-char term_colour;
 
 int main() {
   term_colour = *((char*) VGA_START+1);
@@ -22,30 +21,23 @@ int main() {
   term_column = 0;
   print("A tiny tiny kernel.");
 
+  init_gdt();
+
+  remap_pics();
+  init_idt();
+
+  // Set up keyboard handler
+  install_interrupt_handler(1, keyboard_handler);
+  
+  // Set up PIT
+  set_timer_freq(100);
+  install_interrupt_handler(0, pit_handler);
+  
+  // Enable HW interrupts
+  __asm__ ("sti");
+  
   return 0;
 }
-
-void print(char *str) {
-  for (int i = 0; str[i] != '\0'; i++) {
-    printchar(str[i]);
-  }
-}
-
-
-void printchar(char c) {
-  uint16_t  entry = c | term_colour << 8;
-  uint16_t* vga = (uint16_t*) VGA_START;
-  uint16_t index = (TERM_WIDTH*term_row) + term_column;
-  vga[index] = entry;
-  if (term_column == TERM_WIDTH) {
-    term_column = 0;
-    term_row++;
-  }
-  else {
-    term_column++;
-  }
-}
-
 
 void clear_screen() {
   char* start = (char*) VGA_START;
